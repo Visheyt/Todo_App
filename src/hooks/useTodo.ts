@@ -1,9 +1,22 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Todo } from "./useTodo.types";
 
 export const useTodo = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
+
+  useEffect(() => {
+    const storedTodos = localStorage.getItem("Visheyt");
+    if (storedTodos) {
+      setTodos(JSON.parse(storedTodos));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (todos.length > 0) {
+      localStorage.setItem("Visheyt", JSON.stringify(todos));
+    }
+  }, [todos]);
 
   const addTodo = useCallback((text: string, id?: number) => {
     setTodos((prevTodos) => [

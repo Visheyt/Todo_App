@@ -1,8 +1,37 @@
 import { renderHook, act } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { useTodo } from "./useTodo";
 
 describe("useTodo", () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it("must add todo to localStorage", () => {
+    const { result } = renderHook(() => useTodo());
+
+    act(() => {
+      result.current.addTodo("new todo");
+    });
+
+    expect(result.current.incompletedTodos).toHaveLength(1);
+    expect(result.current.incompletedTodos[0].text).toBe("new todo");
+    expect(localStorage.getItem("Visheyt")).toBeTruthy();
+  });
+
+  it("must download todos to localStorage", () => {
+    const initialTodos = [
+      { text: "todo from storage", isComplete: false, id: 1 },
+    ];
+
+    localStorage.setItem("Visheyt", JSON.stringify(initialTodos));
+
+    const { result } = renderHook(() => useTodo());
+
+    expect(result.current.incompletedTodos).toHaveLength(1);
+    expect(result.current.incompletedTodos[0].text).toBe("todo from storage");
+  });
+
   it("must add todo", () => {
     const { result } = renderHook(() => useTodo());
 
