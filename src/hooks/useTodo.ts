@@ -5,8 +5,11 @@ import { Todo } from "./useTodo.types";
 export const useTodo = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  const addTodo = useCallback((text: string, id: number) => {
-    setTodos((prevTodos) => [...prevTodos, { text, isComplete: false, id }]);
+  const addTodo = useCallback((text: string, id?: number) => {
+    setTodos((prevTodos) => [
+      ...prevTodos,
+      { text, isComplete: false, id: id ? id : Date.now() },
+    ]);
   }, []);
 
   const toggleTodo = useCallback((id: number, isComplete: boolean) => {

@@ -7,18 +7,12 @@ import { FormValues } from "./todo-page.type";
 import { TodoContext } from "../context/todoContext";
 
 export const TodoPage = () => {
-  const {
-    completedTodos,
-    incompletedTodos,
-    addTodo,
-    currentIndex,
-    toggleTodo,
-  } = useTodo();
+  const { completedTodos, incompletedTodos, addTodo, toggleTodo } = useTodo();
 
   const [form] = useForm<FormValues>();
 
   const onFinish = (values: FormValues) => {
-    addTodo(values.todo, currentIndex);
+    addTodo(values.todo);
     form.resetFields();
   };
 
