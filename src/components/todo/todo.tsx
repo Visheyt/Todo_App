@@ -22,7 +22,7 @@ export const Todo: FC<TodoProps> = ({ text, isComplete, id }) => {
   return (
     <div className={styles.todo}>
       <Checkbox checked={checked} onChange={handleCheckboxChange} />
-      <span>{text}</span>
+      <span className={`${checked ? styles.checked : ""}`}>{text}</span>
     </div>
   );
 };

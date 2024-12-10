@@ -25,10 +25,7 @@ export const useTodo = () => {
     [todos]
   );
 
-  const currentIndex = todos.length;
-
   return {
-    currentIndex,
     completedTodos,
     incompletedTodos,
     toggleTodo,
