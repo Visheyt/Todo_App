@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.todoContainer {
+  display: flex;
+  flex: 1 auto;
+  justify-content: center;
+  gap: 20px;
+}
+@media (width < 550px) {
+  .todoContainer {
+    flex-wrap: wrap;
+  }
+}
