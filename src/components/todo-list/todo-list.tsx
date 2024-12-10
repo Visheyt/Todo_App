@@ -5,17 +5,18 @@ import { Todo } from "../todo/todo";
 
 export const TodoList: FC<TodoListProps> = ({ list, title }) => {
   return (
-    <section className={styles.list}>
+    <section className={styles.container}>
       <h2>{title}</h2>
-
-      {list.map((item) => (
-        <Todo
-          key={item.id}
-          text={item.text}
-          isComplete={item.isComplete}
-          id={item.id}
-        />
-      ))}
+      <div className={styles.list}>
+        {list.map((item) => (
+          <Todo
+            key={item.id}
+            text={item.text}
+            isComplete={item.isComplete}
+            id={item.id}
+          />
+        ))}
+      </div>
     </section>
   );
 };

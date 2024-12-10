@@ -2,23 +2,28 @@ import { Button, Form, Input } from "antd";
 import { TodoList } from "../todo-list/todo-list";
 import styles from "./todo-page.module.scss";
 import { useTodo } from "../../hooks/useTodo";
-import { useForm } from "antd/es/form/Form";
+
 import { FormValues } from "./todo-page.type";
 import { TodoContext } from "../context/todoContext";
 
+import { useTodoForm } from "../../hooks/useTodoForm";
+
 export const TodoPage = () => {
-  const { completedTodos, incompletedTodos, addTodo, toggleTodo } = useTodo();
+  const { completedTodos, incompletedTodos, addTodo, toggleTodo, editTodo } =
+    useTodo();
 
-  const [form] = useForm<FormValues>();
-
-  const onFinish = (values: FormValues) => {
-    addTodo(values.todo);
-    form.resetFields();
-  };
+  const { onFinish, onEdit, form, setEdit, editOptions } = useTodoForm({
+    addTodo,
+    editTodo,
+  });
 
   return (
     <main className={styles.container}>
-      <Form name="todo" form={form} onFinish={onFinish}>
+      <Form
+        name="todo"
+        form={form}
+        onFinish={editOptions.isEdit ? onEdit : onFinish}
+      >
         <Form.Item<FormValues>
           name="todo"
           rules={[{ required: true, message: "Please Enter Todo text" }]}
@@ -27,12 +32,12 @@ export const TodoPage = () => {
         </Form.Item>
         <Form.Item>
           <Button type="dashed" variant="outlined" htmlType="submit">
-            Add
+            {editOptions.isEdit ? "Edit" : "Add"}
           </Button>
         </Form.Item>
       </Form>
 
-      <TodoContext.Provider value={{ toggleTodo }}>
+      <TodoContext.Provider value={{ toggleTodo, editTodo, setEdit }}>
         <div className={styles.todoContainer}>
           <TodoList list={incompletedTodos} title={"TO DO"} />
           <TodoList list={completedTodos} title={"Complete"} />

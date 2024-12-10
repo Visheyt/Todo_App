@@ -31,6 +31,13 @@ export const useTodo = () => {
     );
   }, []);
 
+  const editTodo = (id: number, newText: string) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, text: newText } : todo
+      )
+    );
+  };
   const completedTodos = useMemo(
     () => todos.filter((todo) => todo.isComplete),
     [todos]
@@ -46,5 +53,6 @@ export const useTodo = () => {
     incompletedTodos,
     toggleTodo,
     addTodo,
+    editTodo,
   };
 };
