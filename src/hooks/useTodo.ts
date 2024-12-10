@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Todo } from "./useTodo.types";
 
@@ -18,18 +18,18 @@ export const useTodo = () => {
     }
   }, [todos]);
 
-  const addTodo = useCallback((text: string, id?: number) => {
+  const addTodo = (text: string, id?: number) => {
     setTodos((prevTodos) => [
       ...prevTodos,
       { text, isComplete: false, id: id ? id : Date.now() },
     ]);
-  }, []);
+  };
 
-  const toggleTodo = useCallback((id: number, isComplete: boolean) => {
+  const toggleTodo = (id: number, isComplete: boolean) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) => (todo.id === id ? { ...todo, isComplete } : todo))
     );
-  }, []);
+  };
 
   const editTodo = (id: number, newText: string) => {
     setTodos((prevTodos) =>
